@@ -1,0 +1,104 @@
+- id: '1565017961121'
+  alias: Ring Doorbell - Battery Alert
+  trigger:
+  - below: '15'
+    entity_id: sensor.front_door_battery
+    platform: numeric_state
+  condition: []
+  action:
+  - data:
+      message: Ring Door bell battery alert
+    service: notify.mark
+  - data:
+      message: Ring Door bell battery alert
+    service: notify.mobile_app_mi_mix_3
+  
+    - id: '1574093952157'
+    alias: Ring Doorbell - Dog Barking
+    description: ''
+    trigger:
+    - entity_id: binary_sensor.front_door_ding
+      platform: state
+      to: 'on'
+    condition:
+    - condition: state
+      entity_id: device_tracker.mark_mix3_mark_mix3
+      state: <>home
+    - condition: state
+      entity_id: device_tracker.lara_lara_phone
+      state: <>home
+    action:
+    - data:
+        entity_id: media_player.speakers
+        volume_level: '0.5'
+      service: media_player.volume_set
+    - data:
+        entity_id: media_player.speakers
+        media_content_id: https://Your-Domain:8123/local/mp3/labrador-barking.mp3
+        media_content_type: audio/mp4
+      service: media_player.play_media
+    - data:
+        entity_id: media_player.speakers
+        volume_level: '0.5'
+      service: media_player.volume_set
+  - id: '1574768833960'
+    alias: Ring Doorbell - Motion
+    description: ''
+    trigger:
+    - entity_id: binary_sensor.front_door_motion
+      platform: state
+      to: 'on'
+    condition: []
+    action:
+    - data:
+        entity_id: media_player.speakers
+        volume_level: '0.5'
+      service: media_player.volume_set
+    - data:
+        entity_id: media_player.speakers
+        media_content_id: https://Your-Domain:8123/local/mp3/motion.mp3
+        media_content_type: audio/mp4
+      service: media_player.play_media
+    - delay: 00:00:20
+    - data:
+        entity_id: media_player.speakers
+        volume_level: '0.5'
+      service: media_player.volume_set
+    mode: single
+  - id: '1574863740015'
+    alias: Ring Doorbell - Download Video
+    description: ''
+    trigger:
+    - entity_id: binary_sensor.front_door_motion
+      platform: state
+      to: 'off'
+    condition: []
+    action:
+    - delay: 00:02:00
+    - service: python_script.ring_download
+  - id: '1576059364220'
+    alias: Ring Doorbell - Ring
+    description: ''
+    trigger:
+    - entity_id: binary_sensor.front_door_ding
+      platform: state
+      to: 'on'
+    condition: []
+    action:
+    - data:
+        entity_id: media_player.speakers
+        volume_level: '0.5'
+      service: media_player.volume_set
+    - data:
+        entity_id: media_player.speakers
+        media_content_id: https://Your-Domain:8123/local/mp3/Somebody-at-the-door.mp3
+        media_content_type: audio/mp4
+      service: media_player.play_media
+    - data:
+        message: Somebody is at the door
+      service: notify.mobile_app_mi_mix_3
+    - delay: 00:00:30
+    - data:
+        entity_id: media_player.speakers
+        volume_level: '0.5'
+      service: media_player.volume_set

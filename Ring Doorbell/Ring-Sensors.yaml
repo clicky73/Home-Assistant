@@ -1,0 +1,7 @@
+ring_front_door_recording_status:
+  friendly_name: Ring Recording Status (Activity)
+  value_template: "{{ state_attr('sensor.front_door_last_activity', 'recording_status') }}"
+
+ring_front_door_camera_status:
+  friendly_name: Ring Camera Status
+  value_template: "{{ state_attr('camera.front_door', 'state') }}"
