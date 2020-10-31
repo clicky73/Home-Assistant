@@ -1,0 +1,23 @@
+- id: '1'
+  alias: Upstairs Hallway Light Motion
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.upstairs_motion_sensor
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: light.upstairs_hallway_light
+    state: 'off'
+  - below: '35'
+    condition: numeric_state
+    entity_id: sensor.upstairs_motion_sensor
+  action:
+  - data:
+      brightness: 100
+    entity_id: light.upstairs_hallway_light
+    service: light.turn_on
+  - timeout: 00:02:00
+    wait_template: ''
+  - entity_id: light.upstairs_hallway_light
+    service: light.turn_off
